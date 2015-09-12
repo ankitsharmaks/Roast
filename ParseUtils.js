@@ -1,6 +1,7 @@
 var Roast = Parse.Object.extend("Roast");
 var Comment = Parse.Object.extend("Comment");
 var Friend = Parse.Object.extend("Friend");
+var Notification= Parse.Object.extend("Notification");
 
 function isLoggedIn(){
   if(Parse.User.current()){
