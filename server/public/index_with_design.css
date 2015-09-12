@@ -1,0 +1,36 @@
+
+body {
+    background-color: #E6E9ED;
+
+    background-image: url('images/roast_bg.jpg');
+    opacity: 0.9;
+}
+
+@font-face {
+  font-family: 'Dosis';
+  src: url('fonts/dosis/Dosis-ExtraLight.ttf')  format('truetype');
+}
+
+#title-font{
+	font-family: 'Dosis';
+	font-size: 80px;
+	text-align: center;
+	padding-top: 4cm;
+
+
+	-webkit-transition: opacity 3s ease-in;
+       -moz-transition: opacity 3s ease-in;
+        -ms-transition: opacity 3s ease-in;
+         -o-transition: opacity 3s ease-in;
+            transition: opacity 3s ease-in;
+}
+
+#title-font load{
+	opacity: 1;
+}
+
+#facebook-login-button{
+	margin-left: auto ;
+  	margin-right: auto ;
+}
+
