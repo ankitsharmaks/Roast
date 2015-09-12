@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "MHacksApp": {
+      "applicationId": "XUAXkfMROXgOJaAtB6KnV5lkYa138T0Ym59j3m9E"
+    },
+    "_default": {
+      "link": "MHacksApp"
+    }
+  }
+}
