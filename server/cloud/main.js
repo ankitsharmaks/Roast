@@ -1,6 +1,9 @@
+Parse.initialize("XUAXkfMROXgOJaAtB6KnV5lkYa138T0Ym59j3m9E", "lgmrdmFypwHHLGe7SfdW0ZW11Zf4qkTQhqH0AEHV");
+var Roast = Parse.Object.extend("Roast");
+var Comment = Parse.Object.extend("Comment");
+var Friend = Parse.Object.extend("Friend");
+var Notification= Parse.Object.extend("Notification");
 
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
 Parse.Cloud.define("hello", function(request, response) {
   response.success("Hello world!");
 });
@@ -16,42 +19,32 @@ Parse.Cloud.define("setAllFriends", function(request,response){
     response.error("Length 0");
 });
 
-/*Parse.Cloud.afterSave("Roast", function(request) {
-  query = new Parse.Query("Friend");
-  query.include("friend");
-  query.equalTo("user",request.object.get("victim"));
-  query.find({
-    success: function(users) {
-     for(int i=0;i<users.length;i++)
-	 {
-		var user=users[i];
-		var friend=user["friend"];
-		sendNotification(friend,request.object);
-	 }
-    },
-    error: function(error) {
-      console.error("Got an error " + error.code + " : " + error.message);
-    }
-  });
-}
-
-function sendNotification(user, roast)
-{
-	var Notification=Parse.Object.extend("Notification");
-	var notification=new Notification();
-	notification.set("user",user);
-	notification.set("roast",roast);
-	notification.save({
-		success:function(obj){
-			console.log("Notification entry added");
-		},error: function(obj)
-		{
-			console.log("Notification entry failed");
-		}
-	});
-}
-
-Parse.Cloud.afterSave("Comment",function(request))
+Parse.Cloud.afterSave("Roast", function(request) {
+    var victimID = request.object.get("victim");
+    var query = new Parse.Query(Friend);
+    query.equalTo("user",victimID);
+    query.find({
+        success: function(results){
+            for(var i in results){
+                var friendId = results[i].get("friend");
+                var notification=new Notification();
+                notification.set("userID",friendId);
+                notification.set("roast",request.object);
+                notification.save({
+                    success:function(obj){
+                        console.log("Notification entry added");
+                    },error: function(obj)
+                    {
+                        console.log("Notification entry failed");
+                    }
+                });
+            }
+        }, error: function(error){
+            console.log("friend query error:"+error.message);
+        }
+    });
+});
+/*Parse.Cloud.afterSave("Comment",function(request))
 {
   query = new Parse.Query("Friend");
   query.include("friend");

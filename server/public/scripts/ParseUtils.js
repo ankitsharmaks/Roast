@@ -129,6 +129,37 @@ function signupUser(userId, userFullName){
     });
 }
 
+function saveFriend(friendId){
+    if(isLoggedIn()){
+        var query = new Parse.Query(Friend);
+        query.equalTo("user",getLoggedInUser());
+        query.equalTo("friend",friendId);
+        query.find({
+            success: function(results){
+                console.log("friend query response:"+results);
+                if(results.length>0){
+                    console.log("length >0");
+                } else{
+                    console.log("friend not found. adding new friend");
+                    var friend = new Friend();
+                    friend.set("user",getLoggedInUser());
+                    friend.set("friend",friendId);
+                    console.log("user:"+getLoggedInUser()+"  friendid:"+friendId);
+                    friend.save({
+                    success :function(obj){
+                      console.log("friend Saved!");
+                    }, error : function(error){
+                      console.log("friend Save Error:"+error.message);
+                    }
+                    });
+                }
+            }, error: function(error){
+                console.log("friend query error:"+error.message);
+            }
+        });
+    }
+}
+
 function notifyFriends(list){
  Parse.Cloud.run('setAllFriends', list,{
         success: function(){ 

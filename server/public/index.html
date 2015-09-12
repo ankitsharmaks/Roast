@@ -159,16 +159,16 @@
             friend = friends["data"][i]; 
             console.log("friend:"+friend);
             console.log("data:"+friend["id"]);
-
             var id = friend["id"];
-            yourArray[i]=id;
+            saveFriend(id);
+            yourArray.push(""+id);
             otherArray.push([id, name]);
             var name = friend["name"];
             //cloudFriendsList[id].push(name);
             friend_rows += '<img src="http://graph.facebook.com/' + id + '/picture" />';
             friend_rows += '<a href="#" onclick="toggle_visibility(\'' + id + '_text\');">    ' + name + '</a><br/><br/>';
             friend_rows += '<div id="' + id + '_text" class="text" style="display:none">'
-              + '<input id="' + id + '_post" type="text"><br/><button type="button" onClick="post(\'' + id + '_post\')">Post</button></div>';
+              + '<input id="' + id + '" type="text"><br/><button type="button" onClick="post(\'' + id + '\')">Post</button></div>';
             
             /*<a href="#" onclick="toggle_visibility('akash_text');">Akash Desai</a><br/><br/>
             <div id="akash_text" class="text" style="display:none">
@@ -181,7 +181,7 @@
         console.log("arry1:"+myJsonString);
         console.log("arry2:"+otherArray);
         //cloudFriendsList = {"id":"value"};
-        notifyFriends(otherArray);
+        //notifyFriends(myJsonString);
         friends_list_div.innerHTML = friend_rows;
         main_div.appendChild(friends_list_div);
       }
