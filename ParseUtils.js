@@ -29,6 +29,16 @@ function postRoast(){
 	roast.save({
 	success :function(obj){
 	  console.log("roast Saved!");
+	  Parse.Cloud.run('PostNotificationPost',{victim: roast.getVictim()}){
+		  success: function(notify)
+		  {
+			  console.log("notifications sent");
+		  }, error: function(notify)
+		  {
+			  console.log("notifications failed");
+		  }
+		  
+	  }
 	}, error : function(error){
 	  console.log("roast Save Error:"+error.message);
 	}
@@ -43,9 +53,21 @@ function postComment(){
 	comment.save({
 	success :function(obj){
 	  console.log("Comment Saved!");
+	   Parse.Cloud.run('PostNotificationComment',{roastID: comment.getRoast()}){
+		  success: function(notify)
+		  {
+			  console.log("notifications sent");
+		  }, error: function(notify)
+		  {
+			  console.log("notifications failed");
+		  }
+		  
+	  }
+	  
 	}, error : function(error){
 	  console.log("Comment Save Error:"+error.message);
 	}
+	
 	});
 }
 
@@ -81,4 +103,9 @@ function getVictim(){
 
 function getFile(){
 	//Return File Object
+}
+
+function sendNotification()
+{
+	Parse.Cloud.run('PostNotification',{})
 }
