@@ -15,18 +15,19 @@ function isLoggedIn(){
 
 function getLoggedInUser(){
 	if(isLoggedIn()){
+        console.log("Logged in user:"+Parse.User.current().get("username"));
 		return Parse.User.current().get("username");
 	} else {
 		console.log("Not Logged in");
 	}
 }
 
-function postRoast(){
+function postRoast(victim,content){
 	var roast = new Roast();
 	roast.set("roaster",getLoggedInUser());
-	roast.set("victim",getVictim());
-	roast.set("content",getRoastContent());
-	roast.set("file",getFile());
+	roast.set("victim",victim);
+	roast.set("content",content);
+	roast.set("file",null);
 	roast.save({
 	success :function(obj){
 	  console.log("roast Saved!");
@@ -62,6 +63,68 @@ function getFriendList(){
 
         }
     });
+}
+
+function signinOrSignupUser(userId, userFullName){
+    var query = new Parse.Query(Parse.User);
+    query.equalTo("username",userId);
+    query.find({
+        success: function(results){
+            if(results.length>0){
+                loginUser(userId);
+            } else{
+                signupUser(userId, userFullName);
+            }
+        }, error: function(error){
+            console.log("signinOrSignupUser error:"+error.message);
+        }
+    });
+}
+
+function loginUser(userId){
+    console.log("Login for:"+userId);
+    var name = userId;
+    var password = userId;
+    Parse.User.logIn(name,password,{
+    success : function(user){
+      console.log("Login Success");
+    },error : function(user,error){
+      console.log("Login error"+error.message);
+    }
+    });
+}
+
+function signUpIfNotExist(userId, userFullName){
+    var query = new Parse.Query(Parse.User);
+    query.equalTo("username",userId);
+    query.find({
+        success: function(results){
+            if(results.length>0){
+            } else{
+                signupUser(userId, userFullName);
+            }
+        }, error: function(error){
+            console.log("signUpIfNotExist error:"+error.message);
+        }
+    });
+}
+
+function signupUser(userId, userFullName){
+    console.log("SignUp for:"+userId+"  "+userFullName);
+    var name = userId;
+    var password = userId;
+    var user = new Parse.User();
+    user.set("username",name);
+    user.set("password",password);
+    user.set("userFullName",userFullName);
+    
+    user.signUp(null,{
+    success : function(user){
+      console.log("Signup Success");
+    },error : function(user,error){
+      console.log("Signup error");
+    }
+    })
 }
 
 function getComment(){

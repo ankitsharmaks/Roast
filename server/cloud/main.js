@@ -5,7 +5,7 @@ Parse.Cloud.define("hello", function(request, response) {
   response.success("Hello world!");
 });
 
-Parse.Cloud.afterSave("Roast", function(request) {
+/*Parse.Cloud.afterSave("Roast", function(request) {
   query = new Parse.Query("Friend");
   query.include("friend");
   query.equalTo("user",request.object.get("victim"));
@@ -59,4 +59,4 @@ Parse.Cloud.afterSave("Comment",function(request))
       console.error("Got an error " + error.code + " : " + error.message);
     }
   });
-}
+}*/
