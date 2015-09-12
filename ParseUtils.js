@@ -1,5 +1,6 @@
 var Roast = Parse.Object.extend("Roast");
 var Comment = Parse.Object.extend("Comment");
+var Friend = Parse.Object.extend("Friend");
 
 function isLoggedIn(){
   if(Parse.User.current()){
@@ -46,6 +47,20 @@ function postComment(){
 	  console.log("Comment Save Error:"+error.message);
 	}
 	});
+}
+
+function getFriendList(){
+	var query = new Parse.Query(Friend);
+    query.include("user");
+    query.include("friend");
+    query.equalTo("user",getUser());
+    query.find({
+        success: function(results){
+
+        }, error: function(error){
+
+        }
+    });
 }
 
 function getComment(){
