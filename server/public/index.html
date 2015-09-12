@@ -121,8 +121,7 @@
   function post(id) {
     var p = document.getElementById(id).value;
     console.log("Your roast has been posted: " + p);
-    var resp = postRoast(id,p);
-    alert(resp);
+    postRoast(id,p);
   }
 
   // Here we run a very simple test of the Graph API after login is
