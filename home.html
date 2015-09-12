@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>ROAST ON!</title>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+<meta charset="UTF-8">
+</head>
+<body>
+
+<style type="text/css">
+    .section {
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+  function toggle_visibility(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == 'block')
+      e.style.display = 'none';
+    else
+      e.style.display = 'block';
+  }
+
+  function post(id) {
+    var p = document.getElementById(id).value;
+    alert("Your roast has been posted: " + p);
+  }
+</script>
+
+<a href="#" onclick="toggle_visibility('akash_text');">Akash Desai</a><br/><br/>
+<div id="akash_text" style="display:none">
+  <input id="akash_post" type="text"><br/><button type="button" onClick="post('akash_post')">Post</button>
+</div>
+
+<a href="#" onclick="toggle_visibility('utsav_text');">Utsav Patel</a><br/><br/>
+<div id="utsav_text" style="display:none">
+  <input id="utsav_post" type="text"><br/><button type="button" onClick="post('utsav_post')">Post</button>
+</div>
+
+<a href="#" onclick="toggle_visibility('ankit_text');">Ankit Sharma</a><br/><br/>
+<div id="ankit_text" style="display:none">
+  <input id="ankit_post" type="text"><br/><button type="button" onClick="post('ankit_post')">Post</button>
+</div>
+
+<a href="#" onclick="toggle_visibility('jesal_text');">Jesal Janani</a><br/><br/>
+<div id="jesal_text" style="display:none">
+  <input id="jesal_post" type="text"><br/><button type="button" onClick="post('jesal_post')">Post</button>
+</div>
+
+</body>
+</html>
