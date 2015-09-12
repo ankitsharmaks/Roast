@@ -45,13 +45,16 @@
         'into this app.';
       var fr_list_div = document.getElementById('friends_list');
       fr_list_div.parentNode.removeChild(fr_list_div);
+
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
+
       document.getElementById('status').innerHTML = 'Please log ' +
         'into Facebook.';
       var fr_list_div = document.getElementById('friends_list');
       fr_list_div.parentNode.removeChild(fr_list_div);
+      logout();
     }
   }
 
@@ -148,12 +151,20 @@
         var main_div = document.getElementById('main');
         friends_list_div.id = 'friends_list';
         var friend_rows = '';
+
+        var cloudFriendsList = {};
+        var yourArray = [];
+        var otherArray=[];
         for(i=0; i<friends["data"].length; i++){
             friend = friends["data"][i]; 
             console.log("friend:"+friend);
             console.log("data:"+friend["id"]);
+
             var id = friend["id"];
+            yourArray[i]=id;
+            otherArray.push([id, name]);
             var name = friend["name"];
+            //cloudFriendsList[id].push(name);
             friend_rows += '<img src="http://graph.facebook.com/' + id + '/picture" />';
             friend_rows += '<a href="#" onclick="toggle_visibility(\'' + id + '_text\');">    ' + name + '</a><br/><br/>';
             friend_rows += '<div id="' + id + '_text" class="text" style="display:none">'
@@ -164,8 +175,13 @@
               <input id="akash_post" type="text"><br/><button type="button" onClick="post('akash_post')">Post</button>
             </div>*/
             
-            signUpIfNotExist(id,name);
-        }
+            //signUpIfNotExist(id,name);
+        } 
+        var myJsonString = JSON.stringify(yourArray);
+        console.log("arry1:"+myJsonString);
+        console.log("arry2:"+otherArray);
+        //cloudFriendsList = {"id":"value"};
+        notifyFriends(otherArray);
         friends_list_div.innerHTML = friend_rows;
         main_div.appendChild(friends_list_div);
       }

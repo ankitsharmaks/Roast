@@ -1,3 +1,5 @@
+
+Parse.initialize("XUAXkfMROXgOJaAtB6KnV5lkYa138T0Ym59j3m9E", "lgmrdmFypwHHLGe7SfdW0ZW11Zf4qkTQhqH0AEHV");
 var Roast = Parse.Object.extend("Roast");
 var Comment = Parse.Object.extend("Comment");
 var Friend = Parse.Object.extend("Friend");
@@ -124,7 +126,16 @@ function signupUser(userId, userFullName){
     },error : function(user,error){
       console.log("Signup error");
     }
-    })
+    });
+}
+
+function notifyFriends(list){
+ Parse.Cloud.run('setAllFriends', list,{
+        success: function(){ 
+            console.log("Friends list sent to cloud successfully");} 
+        ,
+        error :  function(error){ console.log("Some error while sending the freinds list to cloud");}
+    });
 }
 
 function getComment(){
@@ -149,4 +160,21 @@ function getFile(){
 
 function temp(){
     console.log("temp logs");
+}
+
+function logout(){
+    // if(isLoggedIn()){
+    //     console.log("currently in logout block");
+
+    //     Parse.User.logOut({
+    // success : function(){
+    //   console.log("Logout Success");
+    // },error : function(error){
+    //   console.log("Logout error"+error.message);
+    // }
+    // });
+    // }
+
+    // if(isLoggedIn) console.log("sadly log out is not working");
+    // else console.log("The logout is working may be!");
 }

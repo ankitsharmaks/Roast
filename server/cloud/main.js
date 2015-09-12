@@ -5,6 +5,17 @@ Parse.Cloud.define("hello", function(request, response) {
   response.success("Hello world!");
 });
 
+Parse.Cloud.define("setAllFriends", function(request,response){
+  for(id in request) {
+    console.log(id);
+    //console.log("movie:"+request.params.movie);
+  }
+  if(request.length>0)
+    response.success();
+  else
+    response.error("Length 0");
+});
+
 /*Parse.Cloud.afterSave("Roast", function(request) {
   query = new Parse.Query("Friend");
   query.include("friend");
