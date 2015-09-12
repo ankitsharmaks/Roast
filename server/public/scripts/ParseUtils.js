@@ -83,3 +83,7 @@ function getVictim(){
 function getFile(){
 	//Return File Object
 }
+
+function temp(){
+    console.log("temp logs");
+}
