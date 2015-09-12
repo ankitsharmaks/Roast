@@ -24,7 +24,6 @@ function getLoggedInUser(){
 
 function postRoast(victim,content){
 	var roast = new Roast();
-    var resp = '';
 	roast.set("roaster",getLoggedInUser());
 	roast.set("victim",victim);
 	roast.set("content",content);
@@ -32,13 +31,10 @@ function postRoast(victim,content){
 	roast.save({
 	success :function(obj){
 	  console.log("roast Saved!");
-      resp = 'Your roast has been saved.';
 	}, error : function(error){
 	  console.log("roast Save Error:"+error.message);
-      resp = 'Error in saving roast: ' + error.message;
 	}
 	});
-    return resp;
 }
 
 function postComment(){

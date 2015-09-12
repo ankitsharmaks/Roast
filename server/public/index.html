@@ -121,8 +121,7 @@
   function post(id) {
     var p = document.getElementById(id).value;
     console.log("Your roast has been posted: " + p);
-    var resp = postRoast(id,p);
-    alert(resp);
+    postRoast(id,p);
   }
 
   // Here we run a very simple test of the Graph API after login is
@@ -137,6 +136,16 @@
         'Thanks for logging in, ' + response.name + '!';
     });
 
+    FB.api(
+    "/"+userId+"/picture",
+    function (response) {
+      if (response && !response.error) {
+        console.log("picture loaded");
+        //console.log(response);
+      }
+      else console.log("PICTURE NOT LOADED. ERROR!");
+    }
+);
 
     FB.api("/me/friends", function (friends) {
       if (friends && !friends.error) {
