@@ -24,42 +24,83 @@ function getLoggedInUser(){
 	}
 }
 
-function postRoast(victim,content){
-	var roast = new Roast();
-	roast.set("roaster",getLoggedInUser());
-	roast.set("victim",victim);
-	roast.set("content",content);
-	roast.set("file",null);
-	roast.save({
-	success :function(obj){
-	  console.log("roast Saved!");
-	}, error : function(error){
-	  console.log("roast Save Error:"+error.message);
-	}
-	});
+function getLoggedInUserName(){
+   if(isLoggedIn()){
+       console.log("Logged in userFullName:"+Parse.User.current().get("userFullName"));
+       return Parse.User.current().get("userFullName");
+   } else {
+       console.log("Not Logged in");
+   }
 }
 
-function getRoast(roastID){
-    
-    console.log("getRoast called:"+roastID);
-    return ""+roastID;
-    var query = new Parse.Query(Roast);
-    query.equalTo("objectId",roastID);
-    query.find({
+function postRoast(victim,content){    
+    var query = new Parse.Query(Parse.User);
+    query.equalTo("username",victim);
+    var user = query.find({
         success: function(results){
             if(results.length>0){
-                console.log(results[0].get("content"));
-                return results[0];
+                var roast = new Roast();
+                roast.set("roaster",Parse.User.current());
+                roast.set("victim",results[0]);
+                roast.set("content",content);
+                roast.set("file",null);
+                roast.save({
+                success :function(obj){
+                  console.log("roast Saved!");
+                }, error : function(error){
+                  console.log("roast Save Error:"+error.message);
+                }
+                });
             }
-            else{
-                console.log("Roast Not Found");
-                return null;
-            }
+            console.log("getUserByUserID result:"+results[0].get("userFullName"));
+            
         }, error: function(error){
-            console.log("getRoast Error:"+error.message);
+            console.log("getUserByUserID Error:"+results[0]);
+        }
+    });
+}
+
+function getUserByUserID(username){
+    var query = new Parse.Query(Parse.User);
+    query.equalTo("username",username);
+    var user = query.find({
+        success: function(results){
+            console.log("getUserByUserID result:"+results[0].get("userFullName"));
+            return results[0];
+        }, error: function(error){
+            console.log("getUserByUserID Error:"+results[0]);
             return null;
         }
     });
+    //console.log("userdata: "+user.get("username"));
+}
+
+function getRoast(roastID){
+    console.log("getRoast called:"+roastID);
+    var query = new Parse.Query(Roast);
+    query.equalTo("objectId",roastID);
+    var content = "";
+    var victim = "";
+    var xx = query.find().then(
+        function(results){
+            if(results.length>0){
+                content = results[0].get("content");
+                victim = results[0].get("victim");
+                console.log("content:"+content);
+                $("#victimName").html(victim);
+                $("#roastContent").html(content);
+                return "xxxxx";
+            }
+            else{
+                console.log("Roast Not Found");
+                content = null;
+            }
+        }, function(error){
+            console.log("getRoast Error:"+error.message);
+                content = null;
+        }
+    );
+    return content;
 }
 
 function postComment(comment,roastID){
@@ -192,13 +233,10 @@ function notifyFriends(list){
     });
 }
 
-function getComment(){
+/*function getComment(){
 	//Return comment String
 }
 
-function getRoast(){
-	//Return Roast Object
-}
 
 function getRoastContent(){
 	//Return Roast String
@@ -210,7 +248,7 @@ function getVictim(){
 
 function getFile(){
 	//Return File Object
-}
+}*/
 
 function temp(){
     console.log("temp logs");
