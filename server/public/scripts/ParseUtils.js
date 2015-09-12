@@ -39,11 +39,34 @@ function postRoast(victim,content){
 	});
 }
 
-function postComment(){
+function getRoast(roastID){
+    
+    console.log("getRoast called:"+roastID);
+    return ""+roastID;
+    var query = new Parse.Query(Roast);
+    query.equalTo("objectId",roastID);
+    query.find({
+        success: function(results){
+            if(results.length>0){
+                console.log(results[0].get("content"));
+                return results[0];
+            }
+            else{
+                console.log("Roast Not Found");
+                return null;
+            }
+        }, error: function(error){
+            console.log("getRoast Error:"+error.message);
+            return null;
+        }
+    });
+}
+
+function postComment(comment,roastID){
 	var comment = new Comment();
-	comment.set("content",getComment());
+	comment.set("content",comment);
 	comment.set("user",getLoggedInUser());
-	comment.set("roast",getRoast());
+	comment.set("roast",getRoast(roastID));
 	comment.save({
 	success :function(obj){
 	  console.log("Comment Saved!");
