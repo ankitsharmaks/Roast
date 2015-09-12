@@ -1,4 +1,4 @@
-inc("ParseUtils.js");  
+include("ParseUtils.js");  
 // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -91,7 +91,7 @@ inc("ParseUtils.js");
           console.log("friend:"+friend);
           console.log("data:"+friend["id"]);
 
-
+            temp();
           for(key in friend){
             console.log(key+" "+friend[key]);
             ans = ans+friend[key]+'<br />'

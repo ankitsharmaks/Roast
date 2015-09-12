@@ -4,6 +4,8 @@
 <head>
 <title>ROAST ON!</title>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+<script src="scripts/ParseUtils.js"></script>
 <meta charset="UTF-8">
 </head>
 <body>
@@ -14,6 +16,8 @@
     }
 </style>
 <script type="text/javascript">
+  Parse.initialize("XUAXkfMROXgOJaAtB6KnV5lkYa138T0Ym59j3m9E", "lgmrdmFypwHHLGe7SfdW0ZW11Zf4qkTQhqH0AEHV");
+
   function toggle_visibility(id) {
     var e = document.getElementById(id);
     if (e.style.display == 'block')
@@ -24,7 +28,8 @@
 
   function post(id) {
     var p = document.getElementById(id).value;
-    alert("Your roast has been posted: " + p);
+    console.log("Your roast has been posted: " + p);
+    postRoast(id,p);
   }
 </script>
 
