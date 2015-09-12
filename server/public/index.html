@@ -136,17 +136,6 @@
         'Thanks for logging in, ' + response.name + '!';
     });
 
-    FB.api(
-    "/"+userId+"/picture",
-    function (response) {
-      if (response && !response.error) {
-        console.log("picture loaded");
-        //console.log(response);
-      }
-      else console.log("PICTURE NOT LOADED. ERROR!");
-    }
-);
-
     FB.api("/me/friends", function (friends) {
       if (friends && !friends.error) {
         console.log(friends);
@@ -161,8 +150,8 @@
             console.log("data:"+friend["id"]);
             var id = friend["id"];
             var name = friend["name"];
-            
-            friend_rows += '<a href="#" onclick="toggle_visibility(\'' + id + '_text\');">' + name + '</a><br/><br/>';
+            friend_rows += '<img src="http://graph.facebook.com/' + id + '/picture" />';
+            friend_rows += '<a href="#" onclick="toggle_visibility(\'' + id + '_text\');">    ' + name + '</a><br/><br/>';
             friend_rows += '<div id="' + id + '_text" class="text" style="display:none">'
               + '<input id="' + id + '_post" type="text"><br/><button type="button" onClick="post(\'' + id + '_post\')">Post</button></div>';
             
