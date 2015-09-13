@@ -5,32 +5,47 @@
   <title>My Parse App</title>
   <meta name="description" content="My Parse App">
   <meta name="viewport" content="width=device-width">
-<link rel="stylesheet" type="text/css" href="index_with_design.css">
-<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="site.css">
-<link rel="stylesheet" type="text/css" href="site.min.css">
+  
+  <link rel="stylesheet" type="text/css" href="css/tuktuk.grid.css">
+  <link rel="stylesheet" type="text/css" href="css/tuktuk.css">
+  <link rel="stylesheet" type="text/css" href="css/tuktuk.icons.css">
+  <link rel="stylesheet" type="text/css" href="css/tuktuk.theme.default.css">
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
   <script src="scripts/ParseUtils.js"></script>
+  <!--<script src="scripts/profile.js"></script>-->
 </head>
 
 <body>
-<p id="title-font"> Welcome to Roast.me</p> 
+<center>
+<div id="title-font"><h1>Welcome to Roast.me</h1></div>
 <div id="user-title"></div>
-  <div id="main">
     <!-- 
    Login Button : Utsav
    -->
-    <center>
-    
-    <div id="status"></div>
+<div id="status"></div>
+<fb:login-button autologoutlink="true" data-size="large" scope="public_profile,email,user_friends" onlogin="checkLoginState();">
+</fb:login-button>
+ 
 
-    <fb:login-button autologoutlink="true" data-size="xlarge" scope="public_profile,email,user_friends" onlogin="checkLoginState();">
-    </fb:login-button>
-    </center>
-    
+<section class="padding bck dark">
+<div class="row ">
+<div id="profile-banner">
+  <div id="profile-pic" class="column_4 offset_4 padding"></div>
+  <div id="user-name" class="column_6 offset_3 color text center white"></div>
+  <div id="start-roast-btn"></div>
+</div>
+</div>
+</section>
+</center>
+<div id="profile-tabs">
+  <div id ="history"></div>
+  <div id="feed"></div>
+</div>
+
     <!-- fb button over-->
+
 
   <script type="text/javascript">
     Parse.initialize("XUAXkfMROXgOJaAtB6KnV5lkYa138T0Ym59j3m9E", "lgmrdmFypwHHLGe7SfdW0ZW11Zf4qkTQhqH0AEHV");
@@ -47,6 +62,7 @@
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       document.getElementById("title-font").style.display = 'none';
+      //document.getElementById("fb-btn").style = "horizontal-align:right; vertical-align:top;";
 
       testAPI(response.authResponse.userID);
 
@@ -55,8 +71,11 @@
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
         'into this app with appropriate permissions';
-      var fr_list_div = document.getElementById('friends_list');
-      fr_list_div.parentNode.removeChild(fr_list_div);
+      
+      
+      document.getElementById('profile-banner').innerHTML = "";
+      document.getElementById('history').innerHTML = "";
+      document.getElementById('feed').innerHTML = "";
 
     } else {
 
@@ -66,8 +85,10 @@
       // they are logged into this app or not.
 
       //document.getElementById('status').innerHTML = 'Sign up or Sign in to Facebook.';
-      var fr_list_div = document.getElementById('friends_list');
-      fr_list_div.parentNode.removeChild(fr_list_div);
+
+      document.getElementById('profile-banner').innerHTML = "";
+      document.getElementById('history').innerHTML = "";
+      document.getElementById('feed').innerHTML = "";
       //logout();
     }
   }
@@ -153,18 +174,50 @@
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
       flag = signinOrSignupUser(userId, response.name);
-
+      // flag = true => old user
       if(flag){
-        document.getElementById('user-title').innerHTML =  'Welcome back, ' + response.name + '!';
+        //document.getElementById('user-title').innerHTML =  'Welcome back, ' + response.name + '!';
         
       }else{
-        document.getElementById('user-title').innerHTML =  'Welcome, ' + response.name + '!';
+        //document.getElementById('user-title').innerHTML =  'Welcome, ' + response.name + '!';
       }
-      document.getElementById("user-title").style.display = 'block';
+      //document.getElementById("user-title").style.display = 'block';
       
     });
 
-    FB.api("/me/friends", function (friends) {
+    /////////////////////////////////////////////////
+    var id = getLoggedInUser();
+    var uname = getLoggedInUserName();
+
+    /*<div id="profile-banner">
+      <div id="profile-pic"></div>
+      <div id="user-name"></div>
+      <div id="start-roast-btn"></div>
+    </div>
+    
+    <div id="profile-tabs">
+      <div id ="history"></div>
+      <div id="feed"></div>
+    </div>*/
+
+    var div_pic = document.getElementById('profile-pic');
+    var div_name = document.getElementById('user-name');
+    var div_btn = document.getElementById('start-roast-btn');
+
+    var div_history = document.getElementById('history');
+    var div_feed = document.getElementById('feed');
+
+    div_pic.innerHTML = '<img src="http://graph.facebook.com/' + id + '/picture?width=500" class=" responsive rounded"/>';
+    div_name.innerHTML = '<h1 class="text bold color theme margin-top">&nbsp;&nbsp;&nbsp;&nbsp;' + uname + '</h1>';
+    //div_btn.innerHTML = '<button type="button" onclick="location.href = \'create_roast.html\';">Start Roast</button>';
+    div_btn.innerHTML = '<a href="create_roast.html" class="button small theme">Roast-a-Friend</a>';
+
+    div_history.innerHTML = '<h3>Roast History</h3>';
+    div_feed.innerHTML = '<h3>Feed</h3>';
+
+    /////////////////////////////////////////////////
+
+    /*FB.api("/me/friends", function (friends) {
       if (friends && !friends.error) {
         console.log(friends);
         // TODO: Handle when the user has no friend using the app (perhaps the object returned will be null?? check and handle)
@@ -194,7 +247,7 @@
             /*<a href="#" onclick="toggle_visibility('akash_text');">Akash Desai</a><br/><br/>
             <div id="akash_text" class="text" style="display:none">
               <input id="akash_post" type="text"><br/><button type="button" onClick="post('akash_post')">Post</button>
-            </div>*/
+            </div>
             
             //signUpIfNotExist(id,name);
         } 
@@ -209,7 +262,7 @@
       else {
       }
     }
-);
+);*/
     //console.log(answer);
     //return answer;
   }
