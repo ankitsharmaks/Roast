@@ -6,10 +6,8 @@
   <meta name="description" content="My Parse App">
   <meta name="viewport" content="width=device-width">
   
-  <link rel="stylesheet" type="text/css" href="css/tuktuk.grid.css">
-  <link rel="stylesheet" type="text/css" href="css/tuktuk.css">
-  <link rel="stylesheet" type="text/css" href="css/tuktuk.icons.css">
-  <link rel="stylesheet" type="text/css" href="css/tuktuk.theme.default.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
@@ -18,30 +16,32 @@
 </head>
 
 <body>
-<center>
+<div class="container-fluid">
+<div class="text-center">
 <div id="title-font"><h1>Welcome to Roast.me</h1></div>
 <div id="user-title"></div>
     <!-- 
    Login Button : Utsav
    -->
 <div id="status"></div>
+<div id="fb-btn">
 <fb:login-button autologoutlink="true" data-size="large" scope="public_profile,email,user_friends" onlogin="checkLoginState();">
 </fb:login-button>
- 
+</div>
+</div>
 
-<section class="padding bck dark">
 <div class="row ">
-<div id="profile-banner">
-  <div id="profile-pic" class="column_4 offset_4 padding"></div>
-  <div id="user-name" class="column_6 offset_3 color text center white"></div>
-  <div id="start-roast-btn"></div>
+<div id="profile-banner" class="text-center">
+  <div id="profile-pic"></div>
+  <div id="user-name" style="text-align:center;"></div>
+  <div id="start-roast-btn"></div><br/><br/>
 </div>
-</div>
-</section>
-</center>
+
 <div id="profile-tabs">
   <div id ="history"></div>
   <div id="feed"></div>
+</div>
+</div>
 </div>
 
     <!-- fb button over-->
@@ -61,8 +61,11 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+      document.getElementById('profile-banner').style.display = 'block';
+      document.getElementById('profile-tabs').style.display = 'block';
       document.getElementById("title-font").style.display = 'none';
       //document.getElementById("fb-btn").style = "horizontal-align:right; vertical-align:top;";
+      document.getElementById('fb-btn').className = "text-right";
 
       testAPI(response.authResponse.userID);
 
@@ -73,9 +76,9 @@
         'into this app with appropriate permissions';
       
       
-      document.getElementById('profile-banner').innerHTML = "";
-      document.getElementById('history').innerHTML = "";
-      document.getElementById('feed').innerHTML = "";
+      /*document.getElementById('profile-banner').style.display = 'none';
+      document.getElementById('profile-tabs').style.display = 'none';
+      document.getElementById('fb-btn').className = "text-center";*/
 
     } else {
 
@@ -86,9 +89,10 @@
 
       //document.getElementById('status').innerHTML = 'Sign up or Sign in to Facebook.';
 
-      document.getElementById('profile-banner').innerHTML = "";
-      document.getElementById('history').innerHTML = "";
-      document.getElementById('feed').innerHTML = "";
+      document.getElementById('profile-banner').style.display = 'none';
+      document.getElementById('profile-tabs').style.display = 'none';
+      document.getElementById('fb-btn').className = "text-center";
+
       //logout();
     }
   }
@@ -184,7 +188,7 @@
       //document.getElementById("user-title").style.display = 'block';
       
     });
-
+    
     /////////////////////////////////////////////////
     var id = getLoggedInUser();
     var uname = getLoggedInUserName();
@@ -206,14 +210,20 @@
 
     var div_history = document.getElementById('history');
     var div_feed = document.getElementById('feed');
+    var div_tabs = document.getElementById('profile-tabs');
 
-    div_pic.innerHTML = '<img src="http://graph.facebook.com/' + id + '/picture?width=500" class=" responsive rounded"/>';
-    div_name.innerHTML = '<h1 class="text bold color theme margin-top">&nbsp;&nbsp;&nbsp;&nbsp;' + uname + '</h1>';
-    //div_btn.innerHTML = '<button type="button" onclick="location.href = \'create_roast.html\';">Start Roast</button>';
-    div_btn.innerHTML = '<a href="create_roast.html" class="button small theme">Roast-a-Friend</a>';
+    var imageUrl = 'http://graph.facebook.com/'+id+'/picture?width=200';
+    $('#profile-pic').css('background-image', 'url(' + imageUrl + ')');
+    //div_pic.innerHTML = '<img src="http://graph.facebook.com/' + id + '/picture?width=200" />';
+    div_name.innerHTML = '<h1>' + uname + '</h1>';
+    div_btn.innerHTML = '<button type="button" class="btn btn-primary" onclick="location.href = \'create_roast.html\';">Start Roast</button>';
 
-    div_history.innerHTML = '<h3>Roast History</h3>';
-    div_feed.innerHTML = '<h3>Feed</h3>';
+    /*div_history.innerHTML = '<h3>Roast History</h3>';
+    div_feed.innerHTML = '<h3>Feed</h3>';*/
+    div_tabs.innerHTML = '<ul class="nav nav-tabs nav-justified">'
+      + '<li role="navigation" class="active"><a href="#">Feed</a></li>'
+      + '<li role="navigation"><a href="#">History</a></li>'
+      + '</ul>';
 
     /////////////////////////////////////////////////
 
