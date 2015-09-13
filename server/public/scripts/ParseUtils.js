@@ -46,9 +46,10 @@ function postRoast(victim,content){
                 roast.set("file",null);
                 roast.save({
                 success :function(obj){
-                  console.log("roast Saved!");
+                    console.log("roast Saved!");
+                    sendNotificationsAfterRoast(victim,obj);
                 }, error : function(error){
-                  console.log("roast Save Error:"+error.message);
+                    console.log("roast Save Error:"+error.message);
                 }
                 });
             }
@@ -56,6 +57,31 @@ function postRoast(victim,content){
             
         }, error: function(error){
             console.log("getUserByUserID Error:"+results[0]);
+        }
+    });
+}
+
+function sendNotificationsAfterRoast(victimID,roast){
+    var query = new Parse.Query(Friend);
+    query.equalTo("user",victimID);
+    query.find({
+        success: function(results){
+            for(var i in results){
+                var friendId = results[i].get("friend");
+                var notification=new Notification();
+                notification.set("userID",friendId);
+                notification.set("roast",roast);
+                notification.save({
+                    success:function(obj){
+                        console.log("Notification entry added");
+                    },error: function(obj)
+                    {
+                        console.log("Notification entry failed");
+                    }
+                });
+            }
+        }, error: function(error){
+            console.log("friend query error:"+error.message);
         }
     });
 }
@@ -279,6 +305,26 @@ function notifyFriends(list){
             console.log("Friends list sent to cloud successfully");} 
         ,
         error :  function(error){ console.log("Some error while sending the freinds list to cloud");}
+    });
+}
+
+function getNotificationsForUser(){
+    var query = new Parse.Query(Notification);
+    query.include("roast");
+    query.equalTo("userID",Parse.User.current().get("username"));
+    query.find({
+        success: function(results){
+            if(results.length>0){
+                for(var i in results){
+                    var roast = results[i].get("roast");
+                    console.log("Roast for "+results[i].get("roast").get("victim").get("userFullName")+ "added");
+                }
+            } else{
+                console.log("No notifications found");
+            }
+        }, error: function(error){
+            console.log("getNotificationsForUser error:"+error.message);
+        }
     });
 }
 
