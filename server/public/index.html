@@ -5,23 +5,29 @@
   <title>My Parse App</title>
   <meta name="description" content="My Parse App">
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" type="text/css" href="index_with_design.css">
+<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="site.css">
+<link rel="stylesheet" type="text/css" href="site.min.css">
+
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
   <script src="scripts/ParseUtils.js"></script>
 </head>
 
 <body>
-
+<p id="title-font"> Welcome to Roast.me</p> 
   <div id="main">
     <!-- 
    Login Button : Utsav
    -->
-    <fb:login-button autologoutlink="true" scope="public_profile,email,user_friends" onlogin="checkLoginState();">
-    </fb:login-button>
+    <center>
     <div id="status">
     </div>
+    <fb:login-button autologoutlink="true" data-size="xlarge" scope="public_profile,email,user_friends" onlogin="checkLoginState();">
+    </fb:login-button>
+    </center>
+    
     <!-- fb button over-->
 
   <script type="text/javascript">
@@ -50,8 +56,7 @@
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
 
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
+      document.getElementById('status').innerHTML = 'Sign up or Sign in to Facebook.';
       var fr_list_div = document.getElementById('friends_list');
       fr_list_div.parentNode.removeChild(fr_list_div);
       logout();
