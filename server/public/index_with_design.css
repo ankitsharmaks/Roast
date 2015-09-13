@@ -2,9 +2,6 @@
 body {
     background-color: #E6E9ED;
 
-    background-image: url('images/roast_bg.jpg');
-    opacity: 0.9;
-}
 
 @font-face {
   font-family: 'Dosis';
