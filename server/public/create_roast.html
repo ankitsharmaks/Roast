@@ -7,8 +7,8 @@
 	<meta name="description" content="Start Roast">
   <meta name="viewport" content="width=device-width">
   
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
@@ -18,9 +18,11 @@
 
 <body>
 
-	<div id="main">
-
-	</div>
+  <div class="container-fluid">
+  <div style="transform:translateY(10%);">
+    <div id="friends-list" class="text-center"></div>
+  </div>
+  </div>
   <script type="text/javascript">
     Parse.initialize("XUAXkfMROXgOJaAtB6KnV5lkYa138T0Ym59j3m9E", "lgmrdmFypwHHLGe7SfdW0ZW11Zf4qkTQhqH0AEHV");
       
@@ -125,7 +127,7 @@
   function post(id) {
     var p = document.getElementById(id).value;
     console.log("Your roast has been posted: " + p);
-    postRoast(id,p);
+    //postRoast(id,p);
     document.getElementById(id).value = "";
     toggle_visibility(id);
   }
@@ -146,10 +148,8 @@
       if (friends && !friends.error) {
         console.log(friends);
         // TODO: Handle when the user has no friend using the app (perhaps the object returned will be null?? check and handle)
-        var friends_list_div = document.createElement('div');
-        var main_div = document.getElementById('main');
-        friends_list_div.id = 'friends_list';
-        var friend_rows = '';
+        var frlist_div = document.getElementById('friends-list');
+        var friend_rows = '<h1>Select a friend to roast</h1><br/><br/>';
 
         var cloudFriendsList = {};
         var yourArray = [];
@@ -165,9 +165,9 @@
             var name = friend["name"];
             //cloudFriendsList[id].push(name);
             friend_rows += '<img src="http://graph.facebook.com/' + id + '/picture" />';
-            friend_rows += '<a href="#" onclick="toggle_visibility(\'' + id + '_text\');">    ' + name + '</a><br/><br/>';
+            friend_rows += '<a href="#" onclick="toggle_visibility(\'' + id + '_text\');"><h5>&nbsp;&nbsp;' + name + '</h5></a>';
             friend_rows += '<div id="' + id + '_text" class="text" style="display:none">'
-              + '<input id="' + id + '" type="text"><br/><button type="button" onClick="post(\'' + id + '\')">Post</button></div>';
+              + '<textarea id="' + id + '" type="text" class="field span12" placeholder="Enter roast topic..."></textarea><br/><button type="button" class="btn btn-primary" onClick="post(\'' + id + '\')">Post</button></div><br/>';
             
             /*<a href="#" onclick="toggle_visibility('akash_text');">Akash Desai</a><br/><br/>
             <div id="akash_text" class="text" style="display:none">
@@ -181,8 +181,7 @@
         console.log("arry2:"+otherArray);
         //cloudFriendsList = {"id":"value"};
         //notifyFriends(myJsonString);
-        friends_list_div.innerHTML = friend_rows;
-        main_div.appendChild(friends_list_div);
+        frlist_div.innerHTML = friend_rows;
       }
       else {
       }

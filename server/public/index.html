@@ -170,6 +170,11 @@
     postRoast(id,p);
   }
 
+  function setActive(act, deact) {
+    document.getElementById(act).className = "active";
+    document.getElementById(deact).className = "";
+  }
+
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI(userId) {
@@ -221,8 +226,8 @@
     /*div_history.innerHTML = '<h3>Roast History</h3>';
     div_feed.innerHTML = '<h3>Feed</h3>';*/
     div_tabs.innerHTML = '<ul class="nav nav-tabs nav-justified">'
-      + '<li role="navigation" class="active"><a href="#">Feed</a></li>'
-      + '<li role="navigation"><a href="#">History</a></li>'
+      + '<li id="feed_tab" role="navigation" class="active"><a href="#" onClick="setActive(\'feed_tab\', \'history_tab\');"><h5>Feed</h5></a></li>'
+      + '<li id="history_tab" role="navigation"><a href="#" onClick="setActive(\'history_tab\', \'feed_tab\');"><h5>History</h5></a></li>'
       + '</ul>';
 
     /////////////////////////////////////////////////
