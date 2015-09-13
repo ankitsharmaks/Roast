@@ -19,8 +19,8 @@ Parse.Cloud.define("setAllFriends", function(request,response){
     response.error("Length 0");
 });
 
-Parse.Cloud.afterSave("Roast", function(request) {
-    var victimID = request.object.get("victim");
+/*Parse.Cloud.afterSave("Roast", function(request) {
+    var victimID = request.object.get("victim").get("username");
     var query = new Parse.Query(Friend);
     query.equalTo("user",victimID);
     query.find({
@@ -43,7 +43,7 @@ Parse.Cloud.afterSave("Roast", function(request) {
             console.log("friend query error:"+error.message);
         }
     });
-});
+});*/
 /*Parse.Cloud.afterSave("Comment",function(request))
 {
   query = new Parse.Query("Friend");
