@@ -181,12 +181,14 @@ function getFriendList(){
 }
 
 function signinOrSignupUser(userId, userFullName){
+    flag=false;
     var query = new Parse.Query(Parse.User);
     query.equalTo("username",userId);
     query.find({
         success: function(results){
             if(results.length>0){
                 loginUser(userId);
+                flag=true;
             } else{
                 signupUser(userId, userFullName);
             }
@@ -194,6 +196,8 @@ function signinOrSignupUser(userId, userFullName){
             console.log("signinOrSignupUser error:"+error.message);
         }
     });
+
+    return flag;
 }
 
 function loginUser(userId){

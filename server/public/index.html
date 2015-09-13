@@ -17,13 +17,15 @@
 
 <body>
 <p id="title-font"> Welcome to Roast.me</p> 
+<div id="user-title"></div>
   <div id="main">
     <!-- 
    Login Button : Utsav
    -->
     <center>
-    <div id="status">
-    </div>
+    
+    <div id="status"></div>
+
     <fb:login-button autologoutlink="true" data-size="xlarge" scope="public_profile,email,user_friends" onlogin="checkLoginState();">
     </fb:login-button>
     </center>
@@ -44,21 +46,28 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+      document.getElementById("title-font").style.display = 'none';
+
       testAPI(response.authResponse.userID);
+
     } else if (response.status === 'not_authorized') {
+
       // The person is logged into Facebook, but not your app.
-      //document.getElementById('status').innerHTML = 'Please log ' +
-      //  'into this app.';
-      //var fr_list_div = document.getElementById('friends_list');
-      //fr_list_div.parentNode.removeChild(fr_list_div);
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app with appropriate permissions';
+      var fr_list_div = document.getElementById('friends_list');
+      fr_list_div.parentNode.removeChild(fr_list_div);
 
     } else {
+
+      document.getElementById("user-title").style.display = 'none';
+      document.getElementById("title-font").style.display = 'block';
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
 
       //document.getElementById('status').innerHTML = 'Sign up or Sign in to Facebook.';
-      //var fr_list_div = document.getElementById('friends_list');
-      //fr_list_div.parentNode.removeChild(fr_list_div);
+      var fr_list_div = document.getElementById('friends_list');
+      fr_list_div.parentNode.removeChild(fr_list_div);
       //logout();
     }
   }
@@ -143,9 +152,16 @@
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-      signinOrSignupUser(userId, response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+      flag = signinOrSignupUser(userId, response.name);
+
+      if(flag){
+        document.getElementById('user-title').innerHTML =  'Welcome back, ' + response.name + '!';
+        
+      }else{
+        document.getElementById('user-title').innerHTML =  'Welcome, ' + response.name + '!';
+      }
+      document.getElementById("user-title").style.display = 'block';
+      
     });
 
     FB.api("/me/friends", function (friends) {

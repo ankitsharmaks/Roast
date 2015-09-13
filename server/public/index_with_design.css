@@ -38,8 +38,16 @@ body {
 #status{
   font-size:20px;
   padding-bottom: 10px;
+  padding-top: 
   position: relative;
   margin-left: auto ;
   margin-right: auto ;
 }
+
+#user-title{
+  
+  font-size:30px;
+  text-align: center;
+}
+
 
