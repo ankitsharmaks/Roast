@@ -37,9 +37,8 @@
             var roastId = getURLParameter('roastId');
             console.log("roastId:"+roastId);
             getRoast(roastId);
-            getUserByUserID("10201045764501710");
-            
-            postRoast("1043644435680973","chut");
+            postComment("comment 102",roastId);
+            getCommentsForRoast(roastId);
         </script>
 
 	</body>
