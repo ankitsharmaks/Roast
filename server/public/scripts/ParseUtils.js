@@ -48,6 +48,7 @@ function postRoast(victim,content){
                 success :function(obj){
                     console.log("roast Saved!");
                     sendNotificationsAfterRoast(victim,obj);
+                    window.location.replace("roast.html?roastId="+obj.id);
                 }, error : function(error){
                     console.log("roast Save Error:"+error.message);
                 }
@@ -168,14 +169,22 @@ function getCommentsForRoast(roastID){
                 query.find({
                 success: function(results){
                     if(results.length>0){
+                        var commentHTML = "";
                         for( var i in results){
                             console.log("comment:"+results[i].get("content"));
+                            console.log("date:"+results[i].get("createdAt"));
                             if(results[i].get("user")){
                                 console.log("user:"+results[i].get("user").get("userFullName"));
                             } else{
                                 console.log("null user");
                             }
+                            commentHTML += "<li> <div class=\"commenterImage\">"
+                                        +" <img src=\"http://graph.facebook.com/"+results[i].get("user").get("username")+"/picture\" />"
+                                        +" </div><div class=\"commentText\"> <p>"
+                                        +results[i].get("content")
+                                        +" </p><span class=\"date sub-text\">"+results[i].get("createdAt")+"</span>   </div>      </li>"; 
                         }
+                        $("#comments").html(commentHTML);
                     } else {
                         console.log("Empty output from Comment Query");
                     }

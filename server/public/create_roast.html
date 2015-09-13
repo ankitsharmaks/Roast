@@ -127,7 +127,7 @@
   function post(id) {
     var p = document.getElementById(id).value;
     console.log("Your roast has been posted: " + p);
-    //postRoast(id,p);
+    postRoast(id,p);
     document.getElementById(id).value = "";
     toggle_visibility(id);
   }
@@ -168,7 +168,7 @@
             friend_rows += '<a href="#" onclick="toggle_visibility(\'' + id + '_text\');"><h5>&nbsp;&nbsp;' + name + '</h5></a>';
             friend_rows += '<div id="' + id + '_text" class="text" style="display:none">'
               + '<textarea id="' + id + '" type="text" class="field span12" placeholder="Enter roast topic..."></textarea><br/>'
-              + '<button type="button" class="btn btn-primary" onclick="location.href = \'roast.html\';">Start</button></div><br/>';
+              + '<button type="button" class="btn btn-primary" onclick="post(\'' + id + '\');">Start</button></div><br/>';
               ///////////////////////////////////////////////////////////////////////// CHANGE UP HERE
             
             /*<a href="#" onclick="toggle_visibility('akash_text');">Akash Desai</a><br/><br/>

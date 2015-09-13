@@ -1,34 +1,103 @@
 <!--  The default page for roasting -->
 
-<html>
+<!doctype html>
 	<head>
-		<title>Roast of Utsav Patel on &lt;this date.&gt;</title>
+		<title>Roast</title>
+
+      <link rel="stylesheet" href="css/bootstrap.css">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/roast.css">
+
         <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
         <script type="text/javascript" src="scripts/ParseUtils.js"></script>
 	</head>
 
 	<body>
-		<h3> Today we are roasting</h3>
-			<h1 id="victimName"> &lt;name&gt;</h1>
-		<h3> because .. </h3>
-			<h1 id="roastContent"> &lt; he thinks that he looks like che guevara whereas he looks like charlie chaplin &gt; </h1>
-		<h3> Let the roast begin! </h3>
+        <!-- <h1>The Roast of <span id="victimName"> &lt;name&gt;</span></h1>
+        <h3 id="roastContent"> &lt; &gt; </h3> -->
 
-		<div id = "comment-box">
-			<h3> &lt;roaster_one&gt; </h3>
-			<h2> &lt;Nasty comment one. Not nasty enough.&gt; </h2>
+   <!--  <div id = "comment-box">
 
-			<br />
+      <form class="form-inline" action="" method = "post" onsubmit = "submitRoastComment()">
+        <div class="form-group">
+          <div class="row">
+          <div class="col-md-12">
+          <textarea class="form-control" id="comment" rows="1" placeholder="Comment"></textarea>
+          </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </form>
+      <table class="table table-hover">
+        <tr>
+          <td>TD1</td>
+          <td>TD2</td>
+        </tr>
+      </table>   -->
 
-			<h3> &lt;roaster_two&gt; </h3>
-			<h2> &lt;Nasty comment two, very very nasty. &gt; </h2>
+      <div class="detailBox">
+        <div class="titleBox">
+          <div class="text-center">
+          <h3><b>The Roast of <span id="victimName"> &lt;name&gt;</span></b></h3>
+        </div>
+        </div>
+        <div class="commentBox">
+          <div class="text-center">            
+            <h4 class="taskDescription" id="roastContent"></h5>
+            </div>
+        </div>
+        <div class="actionBox">
+            <ul class="commentList" id="comments">
+            <li>
+                <div class="commenterImage">
+                  <img src="http://graph.facebook.com/10204940792186519/picture" />
+                </div>
+                <div class="commentText">
+                    <p class="">Living in coldplace doesn't make you cool, you dubmass.</p> <span class="date sub-text">today</span>
 
-			<form action="" method = "post" onsubmit = "submitRoastComment()">
-  			<input type="text" size = "80" name="toast_comment" style="font-size: 15pt"><br>
-  			<input type="submit" value="Submit"  style="visibility: hidden;">
-			</form>
-		</div>
+                </div>
+            </li>
+            <li>
+                <div class="commenterImage">
+                  <img src="http://graph.facebook.com/10201045764501710/picture" />
+                </div>
+                <div class="commentText">
+                    <p class="">Ya, in the world where pigs are the most beautiful animals.</p> <span class="date sub-text">today</span>
+
+                </div>
+            </li>
+            <li>
+                <div class="commenterImage">
+                  <img src="http://graph.facebook.com/10204940792186519/picture" />
+                </div>
+                <div class="commentText">
+                    <p class="">And he wonders why we think that he's retarded.</p> <span class="date sub-text">today</span>
+
+                </div>
+            </li>
+
+            <li>
+                <div class="commenterImage">
+                  <img src="http://graph.facebook.com/1651665485105703/picture" />
+                </div>
+                <div class="commentText">
+                    <p class="">Says a 23 year old virgin guy. Coolness does come handy, eh.</p> <span class="date sub-text">today</span>
+
+                </div>
+            </li>
+
+            </ul>
+            <form class="form-inline" role="form" id="comment-form">
+                <div class="form-group">
+                    <input class="form-control" id="comment-text" type="text" placeholder="Your comments" />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default" id="add-comment-bt">Add</button>
+                </div>
+            </form>
+        </div>
+      </div> 
         
         <script type="text/javascript">
             function getURLParameter(name) {
@@ -36,11 +105,13 @@
             }
             var roastId = getURLParameter('roastId');
             console.log("roastId:"+roastId);
-            //getRoast(roastId);
+            getRoast(roastId);
             //postComment("comment 102",roastId);
-            //getCommentsForRoast(roastId);
+            getCommentsForRoast(roastId);
             //getNotificationsForUser();
-            postRoast("10201045764501710","roast to notification test");
+            //postRoast("10201045764501710","roast to notification test");
+
+            #("#add-comment-bt").
         </script>
 
 	</body>
