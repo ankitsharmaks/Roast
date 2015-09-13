@@ -78,6 +78,7 @@ function getUserByUserID(username){
 function getRoast(roastID){
     console.log("getRoast called:"+roastID);
     var query = new Parse.Query(Roast);
+    query.include("victim");
     query.equalTo("objectId",roastID);
     var content = "";
     var victim = "";
@@ -85,7 +86,7 @@ function getRoast(roastID){
         function(results){
             if(results.length>0){
                 content = results[0].get("content");
-                victim = results[0].get("victim");
+                victim = results[0].get("victim").get("userFullName");
                 console.log("content:"+content);
                 $("#victimName").html(victim);
                 $("#roastContent").html(content);
@@ -103,18 +104,66 @@ function getRoast(roastID){
     return content;
 }
 
-function postComment(comment,roastID){
-	var comment = new Comment();
-	comment.set("content",comment);
-	comment.set("user",getLoggedInUser());
-	comment.set("roast",getRoast(roastID));
-	comment.save({
-	success :function(obj){
-	  console.log("Comment Saved!");
-	}, error : function(error){
-	  console.log("Comment Save Error:"+error.message);
-	}
-	});
+function postComment(content,roastID){
+    var query = new Parse.Query(Roast);
+    query.equalTo("objectId",roastID);
+    query.find({
+        success: function(results){
+            if(results.length>0){
+                var comment = new Comment();
+                comment.set("content",content);
+                comment.set("user",Parse.User.current());
+                comment.set("roast",results[0]);
+                comment.save({
+                success :function(obj){
+                  console.log("Comment Saved!");
+                }, error : function(error){
+                  console.log("Comment Save Error:"+error.message);
+                }
+                });     
+            } else {
+                console.log("Empty output from Roast Query");
+            }
+        }, error: function(error){
+            console.log("getUserByUserID Error:"+error.message);
+        }
+    });
+}
+
+function getCommentsForRoast(roastID){
+    var query = new Parse.Query(Roast);
+    query.equalTo("objectId",roastID);
+    query.find({
+        success: function(results){
+            if(results.length>0){
+                var query = new Parse.Query(Comment);
+                query.equalTo("roast",results[0]);
+                query.include("user")
+                query.find({
+                success: function(results){
+                    if(results.length>0){
+                        for( var i in results){
+                            console.log("comment:"+results[i].get("content"));
+                            if(results[i].get("user")){
+                                console.log("user:"+results[i].get("user").get("userFullName"));
+                            } else{
+                                console.log("null user");
+                            }
+                        }
+                    } else {
+                        console.log("Empty output from Comment Query");
+                    }
+                }, error: function(error){
+                    console.log("output from Comment Query Error:"+error.message);
+                }
+                });
+            } else {
+                console.log("Empty output from Roast Query");
+            }
+        }, error: function(error){
+            console.log("output from Roast Query Error:"+error.message);
+        }
+    });
 }
 
 function getFriendList(){
