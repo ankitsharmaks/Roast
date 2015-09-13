@@ -15,7 +15,7 @@ body {
 	font-size: 80px;
 	text-align: center;
 	padding-top: 4cm;
-  position: absolute;
+  position: relative;
 
 	-webkit-transition: opacity 3s ease-in;
        -moz-transition: opacity 3s ease-in;
@@ -37,8 +37,8 @@ body {
 
 #status{
   font-size:20px;
-  padding-bottom: 5px;
-  position: absolute;
+  padding-bottom: 10px;
+  position: relative;
   margin-left: auto ;
   margin-right: auto ;
 }

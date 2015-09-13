@@ -47,19 +47,19 @@
       testAPI(response.authResponse.userID);
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-      var fr_list_div = document.getElementById('friends_list');
-      fr_list_div.parentNode.removeChild(fr_list_div);
+      //document.getElementById('status').innerHTML = 'Please log ' +
+      //  'into this app.';
+      //var fr_list_div = document.getElementById('friends_list');
+      //fr_list_div.parentNode.removeChild(fr_list_div);
 
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
 
-      document.getElementById('status').innerHTML = 'Sign up or Sign in to Facebook.';
-      var fr_list_div = document.getElementById('friends_list');
-      fr_list_div.parentNode.removeChild(fr_list_div);
-      logout();
+      //document.getElementById('status').innerHTML = 'Sign up or Sign in to Facebook.';
+      //var fr_list_div = document.getElementById('friends_list');
+      //fr_list_div.parentNode.removeChild(fr_list_div);
+      //logout();
     }
   }
 
